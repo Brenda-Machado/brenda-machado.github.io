@@ -109,6 +109,22 @@
             background: radial-gradient(circle, rgba(167, 139, 250, 0.25), rgba(167, 139, 250, 0));
             box-shadow: 0 0 8px rgba(167, 139, 250, 0.15);
         }
+        @keyframes floatCurved {
+            0% {
+                transform: translate(0, 100vh) scale(0.2);
+                opacity: 0;
+            }
+            10% { opacity: 0.4; }
+            50% { transform: translate(20px, 0) scale(0.6); }
+            90% { opacity: 0.4; }
+            100% {
+                transform: translate(-20px, -100vh) scale(0.8);
+                opacity: 0;
+            }
+        }
+        .curved {
+            animation: floatCurved linear infinite;
+        }
         @keyframes floatParticle {
             0% {
                 opacity: 0;
@@ -1501,14 +1517,21 @@
         const nebula = document.getElementById('nebula');
 
         for (let i = 0; i < 40; i++) {
-            const p = document.createElement('div');
-            p.classList.add('particle');
-            p.classList.add(Math.random() > 0.5 ? 'blue' : 'purple');  // Cor aleatória
-            p.style.left = Math.random() * 100 + 'vw';  // Posição aleatória horizontal
-            p.style.top = Math.random() * 100 + 'vh';   // Posição aleatória vertical
-            p.style.animationDuration = 20 + Math.random() * 20 + 's';  // Duração aleatória da animação
-            p.style.animationDelay = -Math.random() * 20 + 's';  // Atraso aleatório
-            container.appendChild(p);
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        p.classList.add(Math.random() > 0.5 ? 'blue' : 'purple');
+    
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.top = Math.random() * 100 + 'vh';
+    
+        p.style.animationDuration = 20 + Math.random() * 20 + 's';
+        p.style.animationDelay = -Math.random() * 20 + 's';
+    
+        if (Math.random() < 0.2) {
+            p.classList.add('curved');
+        }
+    
+        container.appendChild(p);
         }
         // Language switching functionality
         let currentLang = 'pt';
