@@ -1669,14 +1669,14 @@
                     
                     
                     if (p.isSpiral) {
-                        const tt = t * 0.0008;  
-                        const r = 15 + tt * 20; 
+                        const tt = t * 0.0015;
+                        const r = 20 + tt * 0.5; 
                         const theta = p.angleOffset + tt * 3.2 * p.direction;
                         const x = p.centerX + r * Math.cos(theta);
-                        const y = p.centerY + r * Math.sin(theta) - tt * 20;
+                        const y = p.centerY + r * Math.sin(theta) - tt * 0.05;
                         
                         p.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                        p.el.style.opacity = 0.9 - (t / p.life) * 0.8;
+                        p.el.style.opacity = 0.9 - (t / p.life) * 0.7;
                         p.el.style.filter = 'drop-shadow(0 0 14px rgba(180,160,255,1))';
                     }
 
