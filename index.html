@@ -1521,7 +1521,7 @@
             for (let i = 0; i < total; i++) {
                 const p = document.createElement('div');
                 const colorClass = Math.random() < 0.6 ? 'blue' : 'purple';
-                const useCurved = Math.random() < 0.25; 
+                const useCurved = Math.random() < 0.50; 
                 p.className = 'particle ' + colorClass + (useCurved ? ' curved' : '');
         
                 const size = (Math.random() * 6 + 2).toFixed(2) + 'px'; 
