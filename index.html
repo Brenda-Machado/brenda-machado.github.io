@@ -45,8 +45,42 @@
                 radial-gradient(ellipse at 40% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
+            animation: cosmicShift 20s ease-in-out infinite;
         }
 
+        @keyframes cosmicShift {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Animated Stars Background */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50px 50px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 10px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.4;
+            animation: twinkle 5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Nebula Particles */
         .nebula-particles {
             position: fixed;
             top: 0;
@@ -54,8 +88,56 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
             overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatParticle var(--anim-duration, 12s) linear var(--anim-delay, 0s) infinite;
+            width: var(--size, 6px);
+            height: var(--size, 6px);
+            filter: blur(3px);
+        }
+        .particle.blue {
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.25), rgba(0, 217, 255, 0.25));
+            box-shadow: 0 0 8px rgba(0, 217, 255, 0.15);
+        }
+        .particle.purple {
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.25), rgba(167, 139, 250, 0.25));
+            box-shadow: 0 0 8px rgba(167, 139, 250, 0.15);
+        }
+        @keyframes floatCurved {
+            0% {
+                transform: translate(0, 100vh) scale(0.2);
+                opacity: 0.4;
+            }
+            10% { opacity: 0.8; }
+            50% { transform: translate(20px, 0) scale(0.6); }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translate(-20px, -100vh) scale(0.8);
+                opacity: 0.4;
+            }
+        }
+        .curved {
+            animation: floatCurved var(--anim-duration, 18s) linear var(--anim-delay, 0s) infinite;
+        }
+        @keyframes floatParticle {
+            0% {
+                opacity: 0.4;
+                transform: translateY(100vh) scale(0.2);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0.4;
+                transform: translateY(-100vh) scale(0.8);
+            }
         }
 
         body > * {
