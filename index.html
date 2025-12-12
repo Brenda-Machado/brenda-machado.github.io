@@ -95,10 +95,9 @@
             position: absolute;
             border-radius: 50%;
             opacity: 0;
-            animation: floatParticle linear infinite;
-            /* NEW: smaller size range */
-            width: 6px !important;
-            height: 6px !important;
+            animation: floatParticle var(--anim-duration, 12s) linear var(--anim-delay, 0s) infinite;
+            width: var(--size, 6px);
+            height: var(--size, 6px);
             filter: blur(3px);
         }
         .particle.blue {
@@ -123,7 +122,7 @@
             }
         }
         .curved {
-            animation: floatCurved linear infinite;
+            animation: floatCurved var(--anim-duration, 18s) linear var(--anim-delay, 0s) infinite;
         }
         @keyframes floatParticle {
             0% {
@@ -1514,25 +1513,30 @@
 
     <script>
         // Particles
-        const nebula = document.getElementById('nebula');
-
-        for (let i = 0; i < 40; i++) {
-            const p = document.createElement('div');
-            p.classList.add('particle');
-            p.classList.add(Math.random() > 0.5 ? 'blue' : 'purple');
+        (function createNebulaParticles() {
+            const nebula = document.getElementById('nebula');
+            if (!nebula) return;
         
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.top = Math.random() * 100 + 'vh';
+            const total = 80;
+            for (let i = 0; i < total; i++) {
+                const p = document.createElement('div');
+                const colorClass = Math.random() < 0.6 ? 'blue' : 'purple';
+                const useCurved = Math.random() < 0.25; 
+                p.className = 'particle ' + colorClass + (useCurved ? ' curved' : '');
         
-            p.style.animationDuration = 20 + Math.random() * 20 + 's';
-            p.style.animationDelay = -Math.random() * 20 + 's';
+                const size = (Math.random() * 6 + 2).toFixed(2) + 'px'; 
+                p.style.setProperty('--size', size);
+                p.style.left = (Math.random() * 100).toFixed(2) + 'vw';
+                p.style.top = (Math.random() * 100).toFixed(2) + 'vh';
         
-            if (Math.random() < 0.5) {
-                p.classList.add('curved');
+                const duration = (Math.random() * 12 + 8).toFixed(2) + 's'; 
+                const delay = (-Math.random() * 10).toFixed(2) + 's'; 
+                p.style.setProperty('--anim-duration', duration);
+                p.style.setProperty('--anim-delay', delay);
+        
+                nebula.appendChild(p);
             }
-        
-            container.appendChild(p);
-        }
+        })();
         // Language switching functionality
         let currentLang = 'pt';
 
