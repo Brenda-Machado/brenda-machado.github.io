@@ -1636,7 +1636,7 @@
                 el.style.height = size + 'px';
                 el.style.left = '0px';
                 el.style.top = '0px';
-                el.style.opacity = (isSpiral ? 0.9 : 0.45) + Math.random() * 0.25;
+                el.style.opacity = (isSpiral ? 0.9 : 0.45) + Math.random() * 0.25 + 0.4;
                 el.style.filter = 'drop-shadow(0 0 6px rgba(150,150,255,0.7))';
                 
                 
@@ -1676,7 +1676,7 @@
                         const y = p.centerY + r * Math.sin(theta) - tt * 0.05;
                         
                         p.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                        p.el.style.opacity = 0.9 - (t / p.life) * 0.7;
+                        p.el.style.opacity = 0.9 - (t / p.life) * 0.7 + 0.4;
                         p.el.style.filter = 'drop-shadow(0 0 14px rgba(180,160,255,1))';
                     }
 
@@ -1684,7 +1684,7 @@
                         p.centerX += p.floatVx * dt;
                         p.centerY += p.floatVy * dt;
                         p.el.style.transform = `translate3d(${p.centerX}px, ${p.centerY}px, 0)`;
-                        p.el.style.opacity = 0.45 - (t / p.life) * 0.4;
+                        p.el.style.opacity = 0.45 - (t / p.life) * 0.4 + 0.2;
                         p.el.style.filter = 'drop-shadow(0 0 10px rgba(100,150,255,0.6))';
                     }
 
@@ -1704,7 +1704,7 @@
                     p.size = rand(4,8);
                     p.el.style.width = p.size + 'px';
                     p.el.style.height = p.size + 'px';
-                    p.el.style.opacity = (p.isSpiral ? 1 : 0.5) + Math.random() * 0.2 + 0.2;
+                    p.el.style.opacity = (p.isSpiral ? 1 : 0.5) + Math.random() * 0.2 + 0.4;
                     p.el.style.filter = 'drop-shadow(0 0 10px rgba(140,130,255,0.9))';
                     
                     
