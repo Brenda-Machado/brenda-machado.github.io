@@ -1646,12 +1646,12 @@
                 const floatVy = rand(-0.02, -0.06);
                 const floatVx = rand(-0.01, 0.01);
                 
-                
                 const part = {
                     el, isSpiral, startTime, life, speed, angleOffset, direction,
-                    centerX, centerY, floatVy, floatVx, size
+                    centerX: startX,      
+                    centerY: startY,      
+                    floatVy, floatVx, size
                 };
-                
                 
                 container.appendChild(el);
                 particles.push(part);
@@ -1670,22 +1670,25 @@
                     
                     
                     if (p.isSpiral) {
-                    const tt = t * 0.0015;
-                    const r = 20 + tt * 60;
-                    const theta = p.angleOffset + tt * 3.2 * p.direction;
-                    const x = p.centerX + r * Math.cos(theta);
-                    const y = p.centerY + r * Math.sin(theta) - tt * 40;
-                    
-                    
-                    p.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                    p.el.style.opacity = 0.9 - (t / p.life) * 0.7;
-                    p.el.style.filter = 'drop-shadow(0 0 14px rgba(180,160,255,1))';
-                    } 
-                    else {
-                    p.centerX += p.floatVx * dt;
-                    p.centerY += p.floatVy * dt;
-                    p.el.style.transform = `translate3d(${p.centerX}px, ${p.centerY}px, 0)`;
+                        const tt = t * 0.0008;  
+                        const r = 15 + tt * 20; 
+                        const theta = p.angleOffset + tt * 3.2 * p.direction;
+                        const x = p.centerX + r * Math.cos(theta);
+                        const y = p.centerY + r * Math.sin(theta) - tt * 20;
+                        
+                        p.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                        p.el.style.opacity = 0.9 - (t / p.life) * 0.8;
+                        p.el.style.filter = 'drop-shadow(0 0 14px rgba(180,160,255,1))';
                     }
+
+                    else {
+                        p.centerX += p.floatVx * dt;
+                        p.centerY += p.floatVy * dt;
+                        p.el.style.transform = `translate3d(${p.centerX}px, ${p.centerY}px, 0)`;
+                        p.el.style.opacity = 0.45 - (t / p.life) * 0.4;
+                        p.el.style.filter = 'drop-shadow(0 0 10px rgba(100,150,255,0.6))';
+                    }
+
                 }
                     
                     
