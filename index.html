@@ -1,919 +1,653 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="lang-pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brenda Machado - Computer Science Graduate</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brenda S. Machado</title>
+  <meta name="description" content="Portfólio de Brenda S. Machado — Ciência da Computação, UFSC. Pesquisa em Robótica Evolutiva, LLMs e Aprendizado por Imitação.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Apenas os ícones de marca necessários -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="nebula-particles" id="nebula"></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">Brenda</div>
-            <ul class="nav-links">
-                <li><a href="#home" data-pt="Início" data-en="Home">Início</a></li>
-                <li><a href="#about" data-pt="Sobre" data-en="About">Sobre</a></li>
-                <li><a href="#research" data-pt="Pesquisa" data-en="Research">Pesquisa</a></li>
-                <li><a href="#papers" data-pt="Artigos" data-en="Papers">Publicações</a></li>
-                <li><a href="#projects" data-pt="Projetos" data-en="Projects">Projetos</a></li>
-                <li><a href="#contact" data-pt="Contato" data-en="Contact">Contato</a></li>
-            </ul>
-            <div class="language-toggle">
-                <button class="lang-btn active" onclick="switchLanguage('pt')" id="pt-btn">
-                    <i class="fas fa-flag"></i>
-                    PT
-                </button>
-                <button class="lang-btn" onclick="switchLanguage('en')" id="en-btn">
-                    <i class="fas fa-flag"></i>
-                    EN
-                </button>
-            </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </nav>
+  <!-- ─── Nav ──────────────────────────────────────────────────── -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Brenda</a>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+      <ul class="nav-links">
+        <li><a href="#about"    data-pt="Sobre"      data-en="About">Sobre</a></li>
+        <li><a href="#research" data-pt="Pesquisa"   data-en="Research">Pesquisa</a></li>
+        <li><a href="#papers"   data-pt="Publicações" data-en="Papers">Publicações</a></li>
+        <li><a href="#projects" data-pt="Projetos"   data-en="Projects">Projetos</a></li>
+        <li><a href="#contact"  data-pt="Contato"    data-en="Contact">Contato</a></li>
+      </ul>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav">
-        <button class="close-menu-btn" onclick="closeMobileMenu()">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="mobile-nav-header">Menu</div>
-        <ul class="mobile-nav-links">
-            <li><a href="#home" onclick="closeMobileMenu()" data-pt="Início" data-en="Home">Início</a></li>
-            <li><a href="#about" onclick="closeMobileMenu()" data-pt="Sobre" data-en="About">Sobre</a></li>
-            <li><a href="#research" onclick="closeMobileMenu()" data-pt="Pesquisa" data-en="Research">Pesquisa</a></li>
-            <li><a href="#papers" onclick="closeMobileMenu()" data-pt="Artigos" data-en="Papers">Publicações</a></li>
-            <li><a href="#projects" onclick="closeMobileMenu()" data-pt="Projetos" data-en="Projects">Projetos</a></li>
-            <li><a href="#contact" onclick="closeMobileMenu()" data-pt="Contato" data-en="Contact">Contato</a></li>
-        </ul>
-        <div class="mobile-lang-toggle">
-            <button class="lang-btn active" onclick="switchLanguage('pt')" id="pt-btn-mobile">
-                <i class="fas fa-flag"></i>
-                PT
-            </button>
-            <button class="lang-btn" onclick="switchLanguage('en')" id="en-btn-mobile">
-                <i class="fas fa-flag"></i>
-                EN
-            </button>
-        </div>
+      <div class="lang-toggle">
+        <button class="active" data-switch="pt" onclick="LANG.switch('pt')">PT</button>
+        <span class="divider">/</span>
+        <button data-switch="en" onclick="LANG.switch('en')">EN</button>
+      </div>
+
+      <button class="hamburger" onclick="menu.open()" aria-label="Abrir menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
+  </nav>
 
-    <!-- Hero Section -->
+  <!-- ─── Mobile overlay + drawer ─────────────────────────────── -->
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <aside class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <button class="mobile-nav-close" onclick="menu.close()" aria-label="Fechar menu">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <ul class="mobile-nav-links">
+      <li><a href="#about"    data-pt="Sobre"       data-en="About">Sobre</a></li>
+      <li><a href="#research" data-pt="Pesquisa"    data-en="Research">Pesquisa</a></li>
+      <li><a href="#papers"   data-pt="Publicações" data-en="Papers">Publicações</a></li>
+      <li><a href="#projects" data-pt="Projetos"    data-en="Projects">Projetos</a></li>
+      <li><a href="#contact"  data-pt="Contato"     data-en="Contact">Contato</a></li>
+    </ul>
+
+    <div class="mobile-lang-toggle">
+      <button class="active" data-switch="pt" onclick="LANG.switch('pt')">PT</button>
+      <button data-switch="en" onclick="LANG.switch('en')">EN</button>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- ─── Hero ─────────────────────────────────────────────── -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Brenda S. Machado</h1>
-            
-            <!-- Portuguese Content -->
-            <div class="lang-content active" id="pt-content">
-                <p class="hero-subtitle">Graduada em Ciências da Computação | Developer | Pesquisadora</p>
-                <p class="hero-description">
-                    Graduada em Ciências da Computação na UFSC em 2025, pesquisei temas na área da Robótica Evolutiva, 
-                    Estratégias Evolutivas, Deep Learning e Grandes Modelos de Linguagem (LLMs). Tive contato, por meio de projetos acadêmicos e/ou
-                    pessoais, com diversas áreas e fundamentos da computação e desenvolvimento de software, incluindo linguagens de desenvolvimento, frameworks e APIs diversas.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#papers" class="btn btn-primary">
-                        <i class="fas fa-file-alt"></i>
-                        Ver Publicações
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i>
-                        Entrar em Contato
-                    </a>
-                </div>
-            </div>
+      <div class="hero-inner">
 
-            <!-- English Content -->
-            <div class="lang-content" id="en-content">
-                <p class="hero-subtitle">Computer Science Graduate | Developer | Researcher</p>
-                <p class="hero-description">
-                    Computer Science graduate from UFSC in 2025, I researched topics in the areas of Evolutionary Robotics, Evolutionary Strategies, Deep Learning, and Large Language Models (LLMs). 
-                    Through academic and/or personal projects, I have had experience with several areas and fundamentals of computer science and software engineering, including development languages, diverse frameworks, and APIs.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#papers" class="btn btn-primary">
-                        <i class="fas fa-file-alt"></i>
-                        View Publications
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i>
-                        Get in Touch
-                    </a>
-                </div>
-            </div>
+        <div data-pt>
+          <p class="hero-label">Ciência da Computação · UFSC · 2025</p>
+          <h1>Brenda S.<br>Machado.</h1>
+          <p class="hero-description">
+            Graduada em Ciências da Computação, pesquisei Robótica Evolutiva, Estratégias
+            Evolutivas, Deep Learning e LLMs. Tive contato com diversas áreas, fundamentos da computação e  ferramentas de desenvolvimento de software.
+          </p>
+          <div class="hero-actions">
+            <a href="#papers" class="btn-primary">Ver Publicações</a>
+            <a href="#contact" class="btn-secondary">Entrar em Contato</a>
+          </div>
         </div>
+
+        <div data-en>
+          <p class="hero-label">Computer Science · UFSC · 2025</p>
+          <h1>Brenda S.<br>Machado.</h1>
+          <p class="hero-description">
+            Computer Science graduate who researched Evolutionary Robotics, Evolutionary
+            Strategies, Deep Learning and LLMs. I have had experience with several areas, fundamentals of computer science and frameworks of software engineering.
+          </p>
+          <div class="hero-actions">
+            <a href="#papers" class="btn-primary">View Publications</a>
+            <a href="#contact" class="btn-secondary">Get in Touch</a>
+          </div>
+        </div>
+
+        <div class="hero-social">
+          <a href="https://github.com/Brenda-Machado" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://orcid.org/0009-0006-6507-4782" target="_blank" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+
+      </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ─── About ─────────────────────────────────────────────── -->
     <section id="about">
-        <div class="container">
-            <!-- Portuguese Content -->
-            <div class="lang-content active" id="about-pt">
-                <div class="section-header">
-                    <h2>Sobre Mim</h2>
-                    <p>Conheça minha trajetória acadêmica
-                    </p>
-                </div>
-                <div class="about-grid">
-                    <div>
-                        <p class="about-text">
-                            Graduada em Ciência da Computação na Universidade Federal de 
-                            Santa Catarina (UFSC). Desenvolvi 
-                            pesquisas em Robótica Adaptativa e Estratégias Evolutivas no Laboratório de 
-                            Integração de Sistemas e Aplicações (LISA) e uma bolsa PIBIC em Aprendizado por Imitação aplicado
-                            a veículos autônomos no Departamento de Automação e Sistemas.
-                        </p>
-                        <p class="about-text">
-                            Minha experiência inclui bolsa PET Computação/Informática UFSC entre 2021-2025, 
-                            participação em congressos internacionais como GECCO'22 e GECCO'23 e organização e apoio
-                            de diversos eventos acadêmicos. Tive experiências com gestão de mídias sociais, design de
-                            materiais de divulgação, manutenção de site WordPress, elaboração de regimento interno, gestão
-                            de comissões e tarefas, entre outras.
-                            Estudei durante a graduação tópicos
-                            relacionados à Teoria da Computação, Algoritmos, Redes, Segurança, Engenharia de Software, etc.
-                        </p>
-                    </div>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-number">4+</div>
-                            <div class="stat-label">Anos de Pesquisa</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2</div>
-                            <div class="stat-label">Congressos Internacionais</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2</div>
-                            <div class="stat-label">Publicações</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2</div>
-                            <div class="stat-label">Projetos Ativos</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
 
-            <!-- English Content -->
-            <div class="lang-content" id="about-en">
-                <div class="section-header">
-                    <h2>About Me</h2>
-                    <p>Learn about my academic journey</p>
-                </div>
-                <div class="about-grid">
-                    <div>
-                        <p class="about-text">
-                            Computer Science graduate from the Federal University of Santa Catarina (UFSC). 
-                            I developed research in Adaptive Robotics and Evolutionary Strategies at the Laboratory 
-                            of Systems Integration and Applications (LISA) and held a PIBIC scholarship in Learning 
-                            by Imitation applied to autonomous vehicles in the Department of Automation and Systems.
-                        </p>
-                        <p class="about-text">
-                            My experience includes a PET Computation/Computer Science scholarship at UFSC from 2021-2025, 
-                            participation in international conferences such as GECCO'22 and GECCO'23, and organization 
-                            and support of various academic events. I have had experience with social media management, 
-                            design of promotional materials, WordPress website maintenance, development of internal 
-                            regulations, committee and task management, among others. During my undergraduate studies, 
-                            I studied topics related to Theory of Computation, Algorithms, Networks, Security, Software 
-                            Engineering, etc.
-                        </p>
-                    </div>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-number">4+</div>
-                            <div class="stat-label">Years of Research</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2</div>
-                            <div class="stat-label">International Conferences</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2</div>
-                            <div class="stat-label">Publications</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">2</div>
-                            <div class="stat-label">Active Projects</div>
-                        </div>
-                    </div>
-                </div>
+        <div data-pt>
+          <div class="section-head">
+            <p class="section-label">Sobre</p>
+            <h2>Trajetória</h2>
+          </div>
+          <div class="about-grid">
+            <div class="about-text-col">
+              <p class="about-text">
+                Graduada em Ciência da Computação na Universidade Federal de Santa Catarina
+                (UFSC). Desenvolvi pesquisas em Robótica Adaptativa e Estratégias Evolutivas
+                no Laboratório de Integração de Sistemas e Aplicações (LISA). Também tive uma bolsa PIBIC
+                em Aprendizado por Imitação aplicado a veículos autônomos no Departamento de
+                Automação e Sistemas.
+              </p>
+              <p class="about-text">
+                Fui membro do PET Computação/Informática UFSC entre 2021–2025, no qual pude
+                participar dos congressos GECCO'22 e GECCO'23 em Portugal. Também trabalhei com a organização de
+                eventos acadêmicos. Tive contato com gestão de mídias sociais, design de materiais
+                de divulgação, manutenção de site WordPress e gestão de comissões.
+              </p>
             </div>
+            <div class="stats">
+              <div class="stat-item">
+                <div class="stat-num">4+</div>
+                <div class="stat-label" data-pt="Anos de Pesquisa" data-en="Years of Research">Anos de Pesquisa</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">2</div>
+                <div class="stat-label" data-pt="Congressos Internacionais" data-en="International Conferences">Congressos Internacionais</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">4</div>
+                <div class="stat-label" data-pt="Publicações" data-en="Publications">Publicações</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">5+</div>
+                <div class="stat-label" data-pt="Projetos" data-en="Projects">Projetos</div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div data-en>
+          <div class="section-head">
+            <p class="section-label">About</p>
+            <h2>Background</h2>
+          </div>
+          <div class="about-grid">
+            <div class="about-text-col">
+              <p class="about-text">
+                Computer Science graduate from the Federal University of Santa Catarina (UFSC).
+                I developed research in Adaptive Robotics and Evolutionary Strategies at the
+                Laboratory of Systems Integration and Applications (LISA), and held a PIBIC
+                scholarship in Imitation Learning applied to autonomous vehicles in the Department
+                of Automation and Systems.
+              </p>
+              <p class="about-text">
+                My experience includes a PET Computation/Computer Science scholarship at UFSC
+                from 2021–2025, participation in GECCO'22 and GECCO'23 in Portugal, and
+                organization of academic events. I have worked with social media management,
+                promotional design, WordPress maintenance, and committee coordination.
+              </p>
+            </div>
+            <div class="stats">
+              <div class="stat-item">
+                <div class="stat-num">4+</div>
+                <div class="stat-label">Years of Research</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">2</div>
+                <div class="stat-label">International Conferences</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Publications</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">5+</div>
+                <div class="stat-label">Projects</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Research Areas -->
+    <!-- ─── Research ──────────────────────────────────────────── -->
     <section id="research">
-        <div class="container">
-            <!-- Portuguese Content -->
-            <div class="lang-content active" id="research-pt">
-                <div class="section-header">
-                    <h2>Áreas de Pesquisa</h2>
-                    <p>Principais focos de investigação científica e desenvolvimento tecnológico</p>
-                </div>
-                <div class="research-grid">
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3>Robótica Evolutiva</h3>
-                        <p>Desenvolvimento de sistemas robóticos que se adaptam dinamicamente ao ambiente, 
-                        utilizando estratégias evolutivas para otimização de comportamentos e tomada de decisão autônoma.</p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h3>Machine Learning & Visão Computacional</h3>
-                        <p>Aplicação de técnicas de aprendizado profundo em problemas diversos, incluindo o desenvolvimento 
-                           de redes neurais artificiais, aplicações em reconhecimento de imagens e desenvolvimento de técnicas de treinamento.
-                        </p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-dna"></i>
-                        </div>
-                        <h3>Estratégias Evolutivas</h3>
-                        <p>Implementação e otimização de algoritmos evolutivos para resolução de problemas 
-                        complexos em robótica e inteligência artificial.</p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <h3>Veículos Autônomos</h3>
-                        <p>Pesquisa em Behavior Cloning e Imitation Learning aplicados à condução autônoma, 
-                        utilizando simuladores avançados e técnicas de deep learning.</p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3>Grandes Modelos de Linguagem</h3>
-                        <p>Projetos utilizando LLMs em aplicações como geração de chaves criptográficamente seguras,
-                        reconhecimento de lesões de pele na área da Telemedicina, entre outras.
-                        </p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
 
-            <!-- English Content -->
-            <div class="lang-content" id="research-en">
-                <div class="section-header">
-                    <h2>Research Areas</h2>
-                    <p>Main focuses of scientific investigation and technological development</p>
-                </div>
-                <div class="research-grid">
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3>Evolutionary Robotics</h3>
-                        <p>Development of robotic systems that dynamically adapt to the environment, 
-                        using evolutionary strategies for behavior optimization and autonomous decision-making.</p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h3>Machine Learning & Computer Vision</h3>
-                        <p>Application of deep learning techniques to diverse problems, including the development 
-                        of artificial neural networks, image recognition applications, and development of training techniques.
-                        </p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-dna"></i>
-                        </div>
-                        <h3>Evolutionary Strategies</h3>
-                        <p>Implementation and optimization of evolutionary algorithms for solving 
-                        complex problems in robotics and artificial intelligence.</p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <h3>Autonomous Vehicles</h3>
-                        <p>Research in Behavior Cloning and Imitation Learning applied to autonomous driving, 
-                        using advanced simulators and deep learning techniques.</p>
-                    </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3>Large Language Models</h3>
-                        <p>Projects using LLMs in applications such as generation of cryptographically secure keys,
-                        skin lesion recognition in the Telemedicine field, among others.
-                        </p>
-                    </div>
-                </div>
+        <div data-pt>
+          <div class="section-head">
+            <p class="section-label">Áreas</p>
+            <h2>Pesquisa</h2>
+            <p>Principais focos de investigação científica e desenvolvimento tecnológico</p>
+          </div>
+          <div class="research-grid">
+            <div class="research-item">
+              <h3>Robótica Evolutiva</h3>
+              <p>Sistemas robóticos que se adaptam dinamicamente ao ambiente usando estratégias
+                 evolutivas para otimização de comportamentos e tomada de decisão autônoma.</p>
             </div>
+            <div class="research-item">
+              <h3>Estratégias Evolutivas</h3>
+              <p>Implementação e otimização de algoritmos evolutivos para resolução de problemas
+                 complexos em robótica e inteligência artificial.</p>
+            </div>
+            <div class="research-item">
+              <h3>Veículos Autônomos</h3>
+              <p>Behavior Cloning e Imitation Learning aplicados à condução autônoma com
+                 simuladores avançados e técnicas de deep learning.</p>
+            </div>
+            <div class="research-item">
+              <h3>Grandes Modelos de Linguagem</h3>
+              <p>MLLMs aplicas reconhecimento de lesões de pele e auxílio do diagnóstico na Telemedicina.</p>
+            </div>
+          </div>
         </div>
+
+        <div data-en>
+          <div class="section-head">
+            <p class="section-label">Areas</p>
+            <h2>Research</h2>
+            <p>Main focuses of scientific investigation and technological development</p>
+          </div>
+          <div class="research-grid">
+            <div class="research-item">
+              <h3>Evolutionary Robotics</h3>
+              <p>Robotic systems that dynamically adapt to their environment using evolutionary
+                 strategies for behavior optimization and autonomous decision-making.</p>
+            </div>
+            <div class="research-item">
+              <h3>Evolutionary Strategies</h3>
+              <p>Implementation and optimization of evolutionary algorithms to solve complex
+                 problems in robotics and artificial intelligence.</p>
+            </div>
+            <div class="research-item">
+              <h3>Autonomous Vehicles</h3>
+              <p>Behavior Cloning and Imitation Learning applied to autonomous driving using
+                 advanced simulators and deep learning techniques.</p>
+            </div>
+            <div class="research-item">
+              <h3>Large Language Models</h3>
+              <p>MLLMs applied to skin lesion recognition and clinical diagnosis support in Telemedicine.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Papers Section -->
+    <!-- ─── Papers ────────────────────────────────────────────── -->
     <section id="papers">
-        <div class="container">
-            <!-- Portuguese Content -->
-            <div class="lang-content active" id="papers-pt">
-                <div class="section-header">
-                    <h2>Publicações e Artigos</h2>
-                    <p>Trabalhos científicos publicados em conferências, revistas ou workshops</p>
-                </div>
-                <div class="papers-grid">
-                    <div class="paper-card">
-                        <h3 class="paper-title">The Effectiveness of Niching on OpenAI-Evolution Strategies in the Evolution of Robotic Behavior</h3>
-                        <p class="paper-authors">Arthur Holtrup Bianchini, Brenda Silva Machado, Jônata Tyska Carvalho</p>
-                        <p class="paper-venue">GECCO'23 Student Workshop - Lisbon, Portugal</p>
-                        <p class="paper-description">
-                            O objetivo deste trabalho é analisar como uma adaptação recente das Estratégias Evolutivas desenvolvidas pela OpenAI, que chamamos de OpenAI-ES, se comporta quando trabalha junto com variação ambiental e técnicas de niching. Os resultados mostraram que essa abordagem aplicada ao benchmark de balanceamento de dupla haste pode melhorar a performance em 9% para OpenAI-ES.
-                        </p>
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/stripped-down-version-of-evorobotpy2" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                            <a href="https://dl.acm.org/doi/10.1145/3583133.3596341" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publicação
-                            </a>
-                        </div>
-                    </div>
-                    <div class="paper-card">
-                        <h3 class="paper-title">Investigação da Eficácia de Técnicas de Nicho e Diferenciação Ambiental aplicadas a Algoritmos da Robótica Evolutiva</h3>
-                        <p class="paper-authors">Brenda Silva Machado, Arthur Holtrup Bianchini, Jônata Tyska Carvalho</p>
-                        <p class="paper-venue">REVISTA COMING COMPET'23 - UFSM </p>
-                        <p class="paper-description">
-                            Este trabalho tem o objetivo de analisar como a adição de técnicas de nicho, que incluem diferenciação ambiental entre as subpopulações, podem ser relevantes a algoritmos da Robótica Evolutiva utilizando a versão do algoritmo ES recentemente proposto pela OpenAI.
-                        </p>
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/evorobotpy2-with-ne" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                            <a href="https://periodicos.ufsm.br/coming/article/view/85256" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publicação
-                            </a>
-                        </div>
-                    </div>
-                    <div class="paper-card">
-                        <h3 class="paper-title">Aprendizado por Imitação com Multimodalidade de Ações para Navegação de Veículos Autônomos</h3>
-                        <p class="paper-authors">Brenda Silva Machado, Eric Aislan Antonelo</p>
-                        <p class="paper-venue">Repositório UFSC </p>
-                        <p class="paper-description">
-                            Este trabalho investigou o uso de modelos de aprendizado por imitação em navegação de veículos autônomos, com foco especial em cenários de multimodalidade de ações.
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/BC-car-racing" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                            <a href="" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publicação
-                            </a>
-                        </div>
-                    </div>
-                    <div class="paper-card">
-                        <h3 class="paper-title">Implementação de um algoritmo adaptativo para otimização de condições de avaliação na Robótica Evolutiva</h3>
-                        <p class="paper-authors">Brenda Silva Machado, Jônata Tyska Carvalho</p>
-                        <p class="paper-venue">Repositório UFSC </p>
-                        <p class="paper-description">
-                            Trabalho de Conclusão do curso de Ciências da Computação na UFSC.
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/otimizacao-condicoes-avaliacao" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                            <a href="https://repositorio.ufsc.br/handle/123456789/270740" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publicação
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
 
-            <!-- English Content -->
-            <div class="lang-content" id="papers-en">
-                <div class="section-header">
-                    <h2>Publications and Papers</h2>
-                    <p>Scientific works published in conferences, journals or workshops</p>
+        <div data-pt>
+          <div class="section-head">
+            <p class="section-label">Publicações</p>
+            <h2>Artigos</h2>
+            <p>Trabalhos publicados em conferências, periódicos e repositórios acadêmicos</p>
+          </div>
+          <ol class="papers-list">
+            <li class="paper-item">
+              <span class="paper-num">01</span>
+              <div>
+                <p class="paper-venue">GECCO'23 Student Workshop — Lisboa, Portugal</p>
+                <h3 class="paper-title">The Effectiveness of Niching on OpenAI-Evolution Strategies in the Evolution of Robotic Behavior</h3>
+                <p class="paper-authors">Arthur Holtrup Bianchini, Brenda Silva Machado, Jônata Tyska Carvalho</p>
+                <p class="paper-desc">Análise de como a OpenAI-ES se comporta ao trabalhar com variação ambiental e técnicas de niching. Os resultados mostram melhora de 9% no benchmark double-pole.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/stripped-down-version-of-evorobotpy2" class="paper-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+                  <a href="https://dl.acm.org/doi/10.1145/3583133.3596341" class="paper-link" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Publicação</a>
                 </div>
-                <div class="papers-grid">
-                    <div class="paper-card">
-                        <h3 class="paper-title">The Effectiveness of Niching on OpenAI-Evolution Strategies in the Evolution of Robotic Behavior</h3>
-                        <p class="paper-authors">Arthur Holtrup Bianchini, Brenda Silva Machado, Jônata Tyska Carvalho</p>
-                        <p class="paper-venue">GECCO'23 Student Workshop - Lisbon, Portugal</p>
-                        <p class="paper-description">
-                            The objective of this work is to analyze how a recent adaptation of Evolution Strategies developed by OpenAI, which we call OpenAI-ES, behaves when working alongside environmental variation and niching techniques. The results showed that this approach applied to the double pole balancing benchmark can improve performance by 9% for OpenAI-ES.
-                        </p>
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/stripped-down-version-of-evorobotpy2" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                            <a href="https://dl.acm.org/doi/10.1145/3583133.3596341" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publication
-                            </a>
-                        </div>
-                    </div>
-                    <div class="paper-card">
-                        <h3 class="paper-title">Investigation of the Effectiveness of Niching Techniques and Environmental Differentiation applied to Evolutionary Robotics Algorithms</h3>
-                        <p class="paper-authors">Brenda Silva Machado, Arthur Holtrup Bianchini, Jônata Tyska Carvalho</p>
-                        <p class="paper-venue">REVISTA COMING COMPET'23 - UFSM </p>
-                        <p class="paper-description">
-                            This work aims to analyze how the addition of niching techniques, which include environmental differentiation between subpopulations, can be relevant to Evolutionary Robotics algorithms using the version of the ES algorithm recently proposed by OpenAI.
-                        </p>
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/evorobotpy2-with-ne" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                            <a href="https://periodicos.ufsm.br/coming/article/view/85256" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publication
-                            </a>
-                        </div>
-                    </div>
-                    <div class="paper-card">
-                        <h3 class="paper-title">Imitation Learning with Action Multimodality for Autonomous Vehicle Navigation</h3>
-                        <p class="paper-authors">Brenda Silva Machado, Eric Aislan Antonelo</p>
-                        <p class="paper-venue">UFSC Repository</p>
-                        <p class="paper-description">
-                            This work investigated the use of imitation learning models in autonomous vehicle navigation, with special focus on action multimodality scenarios.
-                        </p>
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/BC-car-racing" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                            <a href="" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publication
-                            </a>
-                        </div>
-                    </div>
-                    <div class="paper-card">
-                        <h3 class="paper-title">Implementation of an adaptive algorithm for optimizing evaluation conditions in Evolutionary Robotics.</h3>
-                        <p class="paper-authors">Brenda Silva Machado, Jônata Tyska Carvalho</p>
-                        <p class="paper-venue">UFSC Repository</p>
-                        <p class="paper-description">
-                            Final undergraduate thesis in Computer Science at UFSC.
-                        <div class="paper-links">
-                            <a href="https://github.com/Brenda-Machado/otimizacao-condicoes-avaliacao" class="paper-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                            <a href="https://repositorio.ufsc.br/handle/123456789/270740" class="paper-link">
-                                <i class="fas fa-external-link-alt"></i>
-                                Publication
-                            </a>
-                        </div>
-                    </div>
+              </div>
+            </li>
+            <li class="paper-item">
+              <span class="paper-num">02</span>
+              <div>
+                <p class="paper-venue">Revista COMING COMPET'23 — UFSM</p>
+                <h3 class="paper-title">Investigação da Eficácia de Técnicas de Nicho e Diferenciação Ambiental aplicadas a Algoritmos da Robótica Evolutiva</h3>
+                <p class="paper-authors">Brenda Silva Machado, Arthur Holtrup Bianchini, Jônata Tyska Carvalho</p>
+                <p class="paper-desc">Análise de como técnicas de nicho com diferenciação ambiental em nichos podem ser relevantes a algoritmos de Robótica Evolutiva usando o OpenAI-ES.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/evorobotpy2-with-ne" class="paper-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+                  <a href="https://periodicos.ufsm.br/coming/article/view/85256" class="paper-link" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Publicação</a>
                 </div>
-            </div>
+              </div>
+            </li>
+            <li class="paper-item">
+              <span class="paper-num">03</span>
+              <div>
+                <p class="paper-venue">Repositório UFSC</p>
+                <h3 class="paper-title">Aprendizado por Imitação com Multimodalidade de Ações para Navegação de Veículos Autônomos</h3>
+                <p class="paper-authors">Brenda Silva Machado, Eric Aislan Antonelo</p>
+                <p class="paper-desc">Investigação do uso de modelos de aprendizado por imitação em navegação de veículos autônomos, com foco em cenários de multimodalidade de ações.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/BC-car-racing" class="paper-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+                </div>
+              </div>
+            </li>
+            <li class="paper-item">
+              <span class="paper-num">04</span>
+              <div>
+                <p class="paper-venue">Repositório UFSC — TCC</p>
+                <h3 class="paper-title">Implementação de um Algoritmo Adaptativo para Otimização de Condições de Avaliação na Robótica Evolutiva</h3>
+                <p class="paper-authors">Brenda Silva Machado, Jônata Tyska Carvalho</p>
+                <p class="paper-desc">Trabalho de Conclusão de Curso de Ciências da Computação na UFSC.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/otimizacao-condicoes-avaliacao" class="paper-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+                  <a href="https://repositorio.ufsc.br/handle/123456789/270740" class="paper-link" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Publicação</a>
+                </div>
+              </div>
+            </li>
+          </ol>
         </div>
+
+        <div data-en>
+          <div class="section-head">
+            <p class="section-label">Papers</p>
+            <h2>Publications</h2>
+            <p>Works published in conferences, journals, and academic repositories</p>
+          </div>
+          <ol class="papers-list">
+            <li class="paper-item">
+              <span class="paper-num">01</span>
+              <div>
+                <p class="paper-venue">GECCO'23 Student Workshop — Lisbon, Portugal</p>
+                <h3 class="paper-title">The Effectiveness of Niching on OpenAI-Evolution Strategies in the Evolution of Robotic Behavior</h3>
+                <p class="paper-authors">Arthur Holtrup Bianchini, Brenda Silva Machado, Jônata Tyska Carvalho</p>
+                <p class="paper-desc">Analysis of how OpenAI-ES behaves when working alongside environmental variation and niching techniques. Results show a 9% improvement on the double pole balancing benchmark.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/stripped-down-version-of-evorobotpy2" class="paper-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://dl.acm.org/doi/10.1145/3583133.3596341" class="paper-link" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Publication</a>
+                </div>
+              </div>
+            </li>
+            <li class="paper-item">
+              <span class="paper-num">02</span>
+              <div>
+                <p class="paper-venue">Revista COMING COMPET'23 — UFSM</p>
+                <h3 class="paper-title">Investigation of the Effectiveness of Niching Techniques and Environmental Differentiation applied to Evolutionary Robotics Algorithms</h3>
+                <p class="paper-authors">Brenda Silva Machado, Arthur Holtrup Bianchini, Jônata Tyska Carvalho</p>
+                <p class="paper-desc">Analysis of how niching techniques with environmental differentiation among niches can be relevant to Evolutionary Robotics algorithms using OpenAI-ES.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/evorobotpy2-with-ne" class="paper-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://periodicos.ufsm.br/coming/article/view/85256" class="paper-link" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Publication</a>
+                </div>
+              </div>
+            </li>
+            <li class="paper-item">
+              <span class="paper-num">03</span>
+              <div>
+                <p class="paper-venue">UFSC Repository</p>
+                <h3 class="paper-title">Imitation Learning with Action Multimodality for Autonomous Vehicle Navigation</h3>
+                <p class="paper-authors">Brenda Silva Machado, Eric Aislan Antonelo</p>
+                <p class="paper-desc">Investigation of imitation learning models for autonomous vehicle navigation, with a focus on action multimodality scenarios.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/BC-car-racing" class="paper-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+                </div>
+              </div>
+            </li>
+            <li class="paper-item">
+              <span class="paper-num">04</span>
+              <div>
+                <p class="paper-venue">UFSC Repository — Thesis</p>
+                <h3 class="paper-title">Implementation of an Adaptive Algorithm for Optimizing Evaluation Conditions in Evolutionary Robotics</h3>
+                <p class="paper-authors">Brenda Silva Machado, Jônata Tyska Carvalho</p>
+                <p class="paper-desc">Undergraduate thesis in Computer Science at UFSC.</p>
+                <div class="paper-links">
+                  <a href="https://github.com/Brenda-Machado/otimizacao-condicoes-avaliacao" class="paper-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+                  <a href="https://repositorio.ufsc.br/handle/123456789/270740" class="paper-link" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Publication</a>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- ─── Projects ──────────────────────────────────────────── -->
     <section id="projects">
-        <div class="container">
-            <!-- Portuguese Content -->
-            <div class="lang-content active" id="projects-pt">
-                <div class="section-header">
-                    <h2>Projetos</h2>
-                    <p>Alguns dos repositórios e ferramentas desenvolvidas durante pesquisas e estudos</p>
-                </div>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">Readlog</h3>
-                            <p class="project-description">
-                                Aplicativo web para registrar livros que leu, juntamente com seus dados, como ISBN, título, autor, etc. Opção de filtragem e edição de informações, assim como exportar .csv.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">SQLite3</span>
-                                <span class="tech-tag">HTML5</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/Readlog" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">File Manager</h3>
-                            <p class="project-description">
-                                Aplicação web full-stack para upload, listagem, download e exclusão de arquivos com controle de acesso por usuário autenticado. 
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">React + Vite</span>
-                                <span class="tech-tag">Python + FastAPI</span>
-                                <span class="tech-tag">SQLite via SQLAlchemy2</span>
-                                <span class="tech-tag">JWT + bcrypt</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/filemanager" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">Task Board</h3>
-                            <p class="project-description">
-                                Aplicativo web de gestão de tarefas, construído utilizando Node.js, PostgresSQL e Prisma.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">PostgresSQL</span>
-                                <span class="tech-tag">Prisma</span>
-                                <span class="tech-tag">Typescript</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/taskboard" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">API PoC - IA e a Geração de Chaves Criptográficas</h3>
-                            <p class="project-description">
-                                Prova de Conceito (PoC) para geração e validação de chaves criptográficas, integrando uma LLM (via API) e fonte pública de entropia (League of Entropy/drand).
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">Ollama API</span>
-                                <span class="tech-tag">HTML5</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/llm-entropy-criptography" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">Cooking Trouble</h3>
-                            <p class="project-description">
-                                Jogo de ação e estratégia onde o jogador deve encontrar ingredientes e enfrentar mapas desafiadores.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Pygame</span>
-                                <span class="tech-tag">MVC</span>
-                                <span class="tech-tag">Singleton</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/cooking_trouble" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Código
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
 
-            <!-- English Content -->
-            <div class="lang-content" id="projects-en">
-                <div class="section-header">
-                    <h2>Projects</h2>
-                    <p>Some of the repositories and tools developed during research and studies</p>
-                </div>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">Readlog</h3>
-                            <p class="project-description">
-                                A flask book reading tracker app. Add books with ISBN, title, author, and optional metadata. Search using personalized filters and export .csv.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">SQLite3</span>
-                                <span class="tech-tag">HTML5</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/Readlog" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">File Manager</h3>
-                            <p class="project-description">
-                                Full-stack web application for uploading, listing, downloading, and deleting files with access control for authenticated users.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">React + Vite</span>
-                                <span class="tech-tag">Python + FastAPI</span>
-                                <span class="tech-tag">SQLite using SQLAlchemy2</span>
-                                <span class="tech-tag">JWT + bcrypt</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/filemanager" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">Task Board</h3>
-                            <p class="project-description">
-                                Task managements app built using Next.js, PostgresSQL and Node.js 
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">PostgresSQL</span>
-                                <span class="tech-tag">Prisma</span>
-                                <span class="tech-tag">Typescript</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/taskboard" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">API PoC – AI and Cryptographic Key Generation</h3>
-                            <p class="project-description">
-                                Proof of Concept (PoC) for generating and validating cryptographic keys, integrating an LLM (via API) and a public entropy source (League of Entropy/drand).
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">Ollama API</span>
-                                <span class="tech-tag">HTML5</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/llm-entropy-criptography" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-header">
-                            <h3 class="project-title">Cooking Trouble</h3>
-                            <p class="project-description">
-                                Action and strategy game where the player must find ingredients and face challenging maps.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Pygame</span>
-                                <span class="tech-tag">MVC</span>
-                                <span class="tech-tag">Singleton</span>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/Brenda-Machado/cooking_trouble" class="project-link">
-                                <i class="fab fa-github"></i>
-                                Code
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div data-pt>
+          <div class="section-head">
+            <p class="section-label">Projetos</p>
+            <h2>Repositórios</h2>
+            <p>Ferramentas e aplicações desenvolvidas durante pesquisas e estudos</p>
+          </div>
+          <div class="projects-grid">
+
+            <article class="project-card">
+              <h3 class="project-name">Readlog</h3>
+              <p class="project-desc">Aplicativo web para registrar livros lidos com ISBN, título, autor e opções de filtragem, edição e exportação em <code>.csv</code>.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">SQLite3</span>
+                <span class="tech-tag">HTML5</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/Readlog" class="project-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">File Manager</h3>
+              <p class="project-desc">Aplicação full-stack para upload, listagem, download e exclusão de arquivos com controle de acesso por autenticação JWT.</p>
+              <div class="project-tech">
+                <span class="tech-tag">React + Vite</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">SQLAlchemy</span>
+                <span class="tech-tag">JWT + bcrypt</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/filemanager" class="project-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">Task Board</h3>
+              <p class="project-desc">Aplicativo web de gestão de tarefas construído com Node.js, PostgreSQL e Prisma, com tipagem estática em TypeScript.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Prisma</span>
+                <span class="tech-tag">TypeScript</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/taskboard" class="project-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">API PoC — LLM &amp; Chaves Criptográficas</h3>
+              <p class="project-desc">Prova de conceito para geração e validação de chaves criptográficas integrando uma LLM via API e fonte pública de entropia (League of Entropy / drand).</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">Ollama API</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/llm-entropy-criptography" class="project-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">Cooking Trouble</h3>
+              <p class="project-desc">Jogo de ação e estratégia onde o jogador encontra ingredientes e enfrenta mapas desafiadores. Implementado com o padrão MVC e Singleton.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Pygame</span>
+                <span class="tech-tag">MVC</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/cooking_trouble" class="project-link" target="_blank"><i class="fab fa-github"></i> Código</a>
+            </article>
+
+          </div>
         </div>
+
+        <div data-en>
+          <div class="section-head">
+            <p class="section-label">Projects</p>
+            <h2>Repositories</h2>
+            <p>Tools and applications developed during research and studies</p>
+          </div>
+          <div class="projects-grid">
+
+            <article class="project-card">
+              <h3 class="project-name">Readlog</h3>
+              <p class="project-desc">Web app to track books read, storing ISBN, title, author, and offering filtering, editing, and <code>.csv</code> export.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">SQLite3</span>
+                <span class="tech-tag">HTML5</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/Readlog" class="project-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">File Manager</h3>
+              <p class="project-desc">Full-stack web application for uploading, listing, downloading, and deleting files with JWT-based access control for authenticated users.</p>
+              <div class="project-tech">
+                <span class="tech-tag">React + Vite</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">SQLAlchemy</span>
+                <span class="tech-tag">JWT + bcrypt</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/filemanager" class="project-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">Task Board</h3>
+              <p class="project-desc">Task management web app built with Node.js, PostgreSQL and Prisma, with static typing via TypeScript.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Prisma</span>
+                <span class="tech-tag">TypeScript</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/taskboard" class="project-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">API PoC — LLM &amp; Cryptographic Keys</h3>
+              <p class="project-desc">Proof of concept for generating and validating cryptographic keys, integrating an LLM via API with a public entropy source (League of Entropy / drand).</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">Ollama API</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/llm-entropy-criptography" class="project-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </article>
+
+            <article class="project-card">
+              <h3 class="project-name">Cooking Trouble</h3>
+              <p class="project-desc">Action and strategy game where the player finds ingredients and faces challenging maps. Built with MVC and Singleton patterns.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Pygame</span>
+                <span class="tech-tag">MVC</span>
+              </div>
+              <a href="https://github.com/Brenda-Machado/cooking_trouble" class="project-link" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </article>
+
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ─── Contact ──────────────────────────────────────────── -->
     <section id="contact">
-        <div class="container">
-            <!-- Portuguese Content -->
-            <div class="lang-content active" id="contact-pt">
-                <div class="section-header">
-                    <h2>Contato</h2>
-                    <p>Vamos colaborar! Entre em contato para discutir pesquisas, projetos ou oportunidades</p>
-                </div>
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Instituição</strong><br>
-                                    Universidade Federal de Santa Catarina (UFSC)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Laboratório</strong><br>
-                                    LabTelemed - Laboratório de Telemedicina da UFSC.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Programa</strong><br>
-                                    Bacharelado em Ciência da Computação (2021-2025)
-                                    <br>
-                                    Mestrado em Inteligência Computacional (2026-2028)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-linkedin"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>LinkedIn</strong><br>
-                                    <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank" style="color: var(--primary-color); text-decoration: none;">
-                                        brenda-silva-machado
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-github"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>GitHub</strong><br>
-                                    <a href="https://github.com/Brenda-Machado" target="_blank" style="color: var(--primary-color); text-decoration: none;">
-                                        Brenda-Machado
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Email Acadêmico</strong><br>
-                                    brenda.silva.machado@posgrad.ufsc.br
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
 
-            <!-- English Content -->
-            <div class="lang-content" id="contact-en">
-                <div class="section-header">
-                    <h2>Contact</h2>
-                    <p>Let's collaborate! Get in touch to discuss research, projects or opportunities</p>
-                </div>
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Institution</strong><br>
-                                    Federal University of Santa Catarina (UFSC)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Laboratory</strong><br>
-                                    LabTelemed - tTelemedicine Laboratory at UFSC.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Program</strong><br>
-                                    Bachelor in Computer Science (2021-2025)
-                                    <br>
-                                    Master's in Computational Intelligence (2026-2028)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-linkedin"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>LinkedIn</strong><br>
-                                    <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank" style="color: var(--primary-color); text-decoration: none;">
-                                        brenda-silva-machado
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-github"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>GitHub</strong><br>
-                                    <a href="https://github.com/Brenda-Machado" target="_blank" style="color: var(--primary-color); text-decoration: none;">
-                                        Brenda-Machado
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <div class="contact-text">
-                                    <strong>Academic Email</strong><br>
-                                    brenda.silva.machado@posgrad.ufsc.br
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div data-pt>
+          <div class="section-head">
+            <p class="section-label">Contato</p>
+          </div>
+          <div class="contact-grid">
+            <div class="contact-group">
+              <div class="contact-item">
+                <p class="contact-item-label">Instituição</p>
+                <p class="contact-item-value">Universidade Federal de Santa Catarina (UFSC)</p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">Laboratório</p>
+                <p class="contact-item-value">LabTelemed — Laboratório de Telemedicina da UFSC</p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">Formação</p>
+                <p class="contact-item-value">
+                  Bacharelado em Ciência da Computação (2021–2025)<br>
+                  Mestrado em Inteligência Computacional (2026–2028)
+                </p>
+              </div>
             </div>
-            
-            <div class="social-links">
-                <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank" class="social-link">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://github.com/Brenda-Machado" target="_blank" class="social-link">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="mailto:brenda.silva.machado@grad.ufsc.br" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://orcid.org/0009-0006-6507-4782" target="_blank" class="social-link">
-                    <i class="fab fa-orcid"></i>
-                </a>
+            <div class="contact-group">
+              <div class="contact-item">
+                <p class="contact-item-label">LinkedIn</p>
+                <p class="contact-item-value">
+                  <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank">brenda-silva-machado</a>
+                </p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">GitHub</p>
+                <p class="contact-item-value">
+                  <a href="https://github.com/Brenda-Machado" target="_blank">Brenda-Machado</a>
+                </p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">ORCID</p>
+                <p class="contact-item-value">
+                  <a href="https://orcid.org/0009-0006-6507-4782" target="_blank">0009-0006-6507-4782</a>
+                </p>
+              </div>
             </div>
+          </div>
         </div>
+
+        <div data-en>
+          <div class="section-head">
+            <p class="section-label">Contact</p>
+          </div>
+          <div class="contact-grid">
+            <div class="contact-group">
+              <div class="contact-item">
+                <p class="contact-item-label">Institution</p>
+                <p class="contact-item-value">Federal University of Santa Catarina (UFSC)</p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">Laboratory</p>
+                <p class="contact-item-value">LabTelemed — Telemedicine Laboratory at UFSC</p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">Education</p>
+                <p class="contact-item-value">
+                  Bachelor in Computer Science (2021–2025)<br>
+                  Master's in Computational Intelligence (2026–2028)
+                </p>
+              </div>
+            </div>
+            <div class="contact-group">
+              <div class="contact-item">
+                <p class="contact-item-label">LinkedIn</p>
+                <p class="contact-item-value">
+                  <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank">brenda-silva-machado</a>
+                </p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">GitHub</p>
+                <p class="contact-item-value">
+                  <a href="https://github.com/Brenda-Machado" target="_blank">Brenda-Machado</a>
+                </p>
+              </div>
+              <div class="contact-item">
+                <p class="contact-item-label">ORCID</p>
+                <p class="contact-item-value">
+                  <a href="https://orcid.org/0009-0006-6507-4782" target="_blank">0009-0006-6507-4782</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p class="footer-text" id="footer-text-pt" style="display: block;">
-                © 2026 - Brenda Silva Machado.
-            </p>
-            <p class="footer-text" id="footer-text-en" style="display: none;">
-                © 2026 - Brenda Silva Machado.
-            </p>
-        </div>
-    </footer>
+  </main>
 
-    <script src="script.js"></script>
+  <!-- ─── Footer ───────────────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <span data-pt>Brenda S. Machado;</span>
+      <span data-en>Brenda S. Machado;</span>
+      <span class="footer-links">
+        <a href="https://github.com/Brenda-Machado" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/brenda-silva-machado-93bbab244" target="_blank">LinkedIn</a>
+        <a href="https://orcid.org/0009-0006-6507-4782" target="_blank">ORCID</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
